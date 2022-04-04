@@ -1,0 +1,92 @@
+version: '3.6'
+services:
+
+  #######################################################
+  #  elasticsearch
+  #######################################################
+  elasticsearch:
+   image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+   container_name: nexttech_elastic
+   environment:
+     - cluster.name=es-docker-cluster
+     - bootstrap.memory_lock=false
+     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+     - http.host=0.0.0.0
+     - transport.host=127.0.0.1
+   ulimits:
+     memlock:
+       soft: -1
+       hard: -1
+   ports:
+     - "9201:9200"
+     - "9301:9300"
+   networks:
+     - nexttechnetwork
+
+  #######################################################
+  #  kibana
+  #######################################################
+  kibana:
+   image: docker.elastic.co/kibana/kibana:6.6.1
+   container_name: nexttech_kibana
+   ports:
+     - "5602:5601"
+   depends_on:
+     - elasticsearch
+   networks:
+     - nexttechnetwork
+
+  #######################################################
+  #  grafana
+  #######################################################
+  grafana:
+    image: grafana/grafana
+    container_name: nexttech_grafana
+    ports:
+      - 3001:3000
+    volumes:
+      - ./docker-volumes/grafana/:/var/lib/grafana
+    depends_on:
+     - elasticsearch
+     - postgres
+    networks:
+      - nexttechnetwork
+
+  #######################################################
+  #  postgres
+  #######################################################
+  postgres:
+    image: postgres
+    container_name: nexttech_postgres
+    command: postgres -c 'max_connections=500'
+  #  volumes:
+  #    - ./docker-volumes/postgres/postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    networks:
+     - nexttechnetwork
+
+  #######################################################
+  #  pgadmin
+  #######################################################
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: nexttech_pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=5050
+    ports:
+      - "5050:5050"
+    depends_on:
+      - postgres
+    networks:
+      - nexttechnetwork
+
+networks:
+  nexttechnetwork:
+    name: nexttech_network

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>17661e1d-b0ac-4faa-a002-20ccbb354f97</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Ocelot" Version="17.0.0" />
+    <PackageReference Include="Ocelot.Provider.Polly" Version="17.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\NextTech.Core.Serilog\NextTech.Core.Serilog.csproj" />
+    <ProjectReference Include="..\..\Core\NextTech.Core.Shared\NextTech.Core.Shared.csproj" />
+    <ProjectReference Include="..\..\Core\NextTech.Core\NextTech.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\NextTech.Core.MediatR\NextTech.Core.MediatR.csproj" />
+    <ProjectReference Include="..\..\Core\NextTech.Core\NextTech.Core.csproj" />
+    <ProjectReference Include="..\NextTech.PayHub.Accounting.Domain\NextTech.PayHub.Accounting.Domain.csproj" />
+    <ProjectReference Include="..\NextTech.PayHub.Accounting.Shared\NextTech.PayHub.Accounting.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Accounting\Commands\" />
+    <Folder Include="Accounting\Handlers\" />
+  </ItemGroup>
+</Project>
